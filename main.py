@@ -12,6 +12,7 @@ class RicochetRobotsUI:
         self.master = master
         self.board = Board(board_size)
         self.cell_size = 30  # size of every cell on the board
+        self.steps = 0
 
         # Canvas setup
         canvas_width = self.board_size[0] * self.cell_size
@@ -19,18 +20,19 @@ class RicochetRobotsUI:
         self.canvas = tk.Canvas(master, width=canvas_width, height=canvas_height)
         self.canvas.pack()
 
-        # Define robots and current selected robot
+        # Define robots, their station position, color and number.
         self.robots = [
-            Robot((2, 3), "red"),
-            Robot((3, 3), "blue"),
-            Robot((4, 3), "green"),
-            Robot((5, 3), "yellow")
+            Robot((2, 3), "red", 0),
+            Robot((3, 3), "blue", 1),
+            Robot((4, 3), "green", 2),
+            Robot((5, 3), "yellow", 3)
         ]
         self.current_robot = 0
 
         self.init_ui()
         self.draw_robots()
         self.draw_walls()
+        self.draw_goals()
         self.bind_keys()
 
     def init_ui(self):  # Draw grid lines
@@ -41,23 +43,36 @@ class RicochetRobotsUI:
             self.canvas.create_line(0, y * self.cell_size, self.board_size[0] * self.cell_size, y * self.cell_size)
 
     def draw_robots(self):
-        self.canvas.delete("robot")  # Clear existing robots
+        # self.canvas.delete("robot")  # Clear existing robots
         for robot in self.robots:
             x1, y1 = robot.position[0] * self.cell_size, robot.position[1] * self.cell_size
             x2, y2 = x1 + self.cell_size, y1 + self.cell_size
             self.canvas.create_rectangle(x1, y1, x2, y2, fill=robot.color, tags="robot")
 
-    def clear_board(self):
+    def draw_walls(self):
+        self.canvas.delete("wall")  # Clear existing walls
+        for wall in self.board.walls:
+            wall.draw(self.canvas, self.cell_size)
+
+    def draw_goals(self):
+        for goal in self.board.goals:
+            goal.draw(self.canvas, self.cell_size)
+
+    def update_board(self):  # Updates the board visually
+        self.canvas.delete("wall")
         self.canvas.delete("robot")
-        self.draw_walls()  # Redraw walls
+        self.canvas.delete("goal")
+        self.draw_walls()
+        self.draw_goals()
+        self.draw_robots()
 
     def move(self, dx, dy):
-        self.draw_walls()
         other_positions = [p.position for i, p in enumerate(self.robots) if i != self.current_robot]
-        walls = {(wall.x, wall.y): wall.direction for wall in self.board.walls}
         robot = self.robots[self.current_robot]
         robot.move(dx, dy, self.board_size, other_positions, self.board)
-        self.draw_robots()
+        self.steps = self.steps + 1
+        print("steps: ", self.steps)
+        self.update_board()
 
     def switch_robot(self, event):
         if event.char in "1234":
@@ -70,10 +85,7 @@ class RicochetRobotsUI:
         self.master.bind("<Right>", lambda e: self.move(1, 0))
         self.master.bind("<Key>", self.switch_robot)
 
-    def draw_walls(self):
-        self.canvas.delete("wall")  # Clear existing walls
-        for wall in self.board.walls:
-            wall.draw(self.canvas, self.cell_size)
+
 
 
 def run_ricochet_robots_ui():

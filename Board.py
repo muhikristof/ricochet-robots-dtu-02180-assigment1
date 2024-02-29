@@ -1,3 +1,4 @@
+from Goal import Goal
 from Wall import Wall, Direction
 
 
@@ -6,9 +7,19 @@ class Board:
         # Initialize the board with given size and an empty list of walls
         self.board_size = board_size
         self.walls = []
+        self.goals = []
 
-        # Add the walls to the canvas
+        # Add the goals and walls to the canvas
+        self.create_goals()
         self.create_walls()
+
+    def create_goals(self):
+        self.add_goal(0,7, 0, "red")
+        self.add_goal(15,0, 1, "blue")
+
+    def add_goal(self, x, y, robot_number, color):
+        goal = Goal(x, y, robot_number, color)
+        self.goals.append(goal)
 
     def create_walls(self):
         self.add_wall(2, 2, Direction.NORTH)
@@ -75,3 +86,4 @@ class Board:
             elif wall.x == x_to and wall.y == y_to and opposite_direction[wall.direction.name] == move_direction:
                 return True
         return False
+
