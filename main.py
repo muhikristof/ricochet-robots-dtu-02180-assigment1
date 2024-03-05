@@ -1,3 +1,4 @@
+from AIInterface import AIInterface, dumb_ai_test
 from Board import Board
 from Robot import Robot
 import tkinter as tk
@@ -86,12 +87,15 @@ class RicochetRobotsUI:
         self.master.bind("<Key>", self.switch_robot)
 
 
-
-
 def run_ricochet_robots_ui():
     root = tk.Tk()
     root.title("Ricochet Robots")
     game_ui = RicochetRobotsUI(root)
+    ai_interface = AIInterface(game_ui)
+
+    # Initialize the AI. This is just a dummy test that moves a robot to goal. But the interaction should be similar.
+    # When building the AI, replace with root.after(0, method to run AI, ai_interface)
+    root.after(1000, dumb_ai_test, ai_interface)
     root.mainloop()
 
 
