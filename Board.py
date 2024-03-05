@@ -88,3 +88,10 @@ class Board:
                 return True
         return False
 
+    def is_on_goal(self, position, robot_number):
+        for goal in self.goals:
+            if position == (goal.x, goal.y) and robot_number == goal.robot_number:
+                print(f"Robot {robot_number} reached its goal at {position}!")
+                return True
+        return False
+

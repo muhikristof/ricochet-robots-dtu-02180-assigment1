@@ -21,7 +21,4 @@ class Robot:
             else:
                 moving = False  # Stop moving if the edge of the board is reached
 
-        # Check if new position is goal
-        for goal in board.goals:
-            if self.position == (goal.x, goal.y) and self.number == goal.robot_number:
-                print(f"Robot {self.number} reached its goal at {self.position}!")
+        board.is_on_goal(self.position, self.number)

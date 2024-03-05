@@ -1,6 +1,7 @@
 from enum import Enum
 import json
 from typing import List
+from AIInterface import AIInterface, dumb_ai_test
 from Board import Board
 from MapDataClass import WallData
 from Robot import Robot
@@ -56,7 +57,7 @@ class RicochetRobotMenu:
             return json.loads(f.read(), object_hook=WallData.to_object)
 
 
-class RicochetRobotsGameUI:
+class RicochetRobotsUI:
     def __init__(self, master, map_data: List[WallData], board_size=(16, 16)):
         # Initialize board and UI elements
         self.board_size = board_size
@@ -160,14 +161,17 @@ def show_game_ui():
     root.title("Ricochet Robots Menu")
     menu_ui = RicochetRobotMenu(root)
     root.mainloop()
-
-
-def run_ricochet_robots_ui(map_diff):
+    
+def run_ricochet_robots_ui(map_data):
     root = tk.Tk()
     root.title("Ricochet Robots")
-    game_ui = RicochetRobotsGameUI(root, map_diff)
-    root.mainloop()
+    game_ui = RicochetRobotsUI(root, map_data)
+    ai_interface = AIInterface(game_ui)
 
+    # Initialize the AI. This is just a dummy test that moves a robot to goal. But the interaction should be similar.
+    # When building the AI, replace with root.after(0, method to run AI, ai_interface)
+    root.after(1000, dumb_ai_test, ai_interface)
+    root.mainloop()
 
 if __name__ == "__main__":
     show_game_ui()
