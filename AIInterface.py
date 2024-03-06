@@ -16,18 +16,9 @@ class AIInterface:
         :param direction: The direction from the Direction enum.
         """
 
-        # Map directions to their (dx, dy) changes
-        direction_map = {
-            Direction.NORTH: (0, -1),
-            Direction.SOUTH: (0, 1),
-            Direction.EAST: (1, 0),
-            Direction.WEST: (-1, 0),
-        }
-        dx, dy = direction_map[direction]
-
         # Set the current robot and move it
         self.game_instance.current_robot = robot_id
-        self.game_instance.move(dx, dy)
+        self.game_instance.move(direction)
         self.game_instance.update_board()
 
         # Use Board's is_on_goal method to check if the robot is on its goal

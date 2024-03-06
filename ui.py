@@ -52,7 +52,9 @@ class RicochetRobotsUI:
 
         # Load map data
         for data in map_data:
-            self.board.add_wall(data.x_pos, data.y_pos, Direction(data.direction))
+            self.board.add_wall(
+                data.x_pos, data.y_pos, Direction.from_int(data.direction)
+            )
 
         # Define robots, their station position, color and number.
         self.robots = [
@@ -90,12 +92,12 @@ class RicochetRobotsUI:
         self.draw_goals()
         self.draw_robots()
 
-    def move(self, dx: int, dy: int):
+    def move(self, direction: Direction):
         other_positions = [
             p.position for i, p in enumerate(self.robots) if i != self.current_robot
         ]
         robot = self.robots[self.current_robot]
-        robot.move(dx, dy, self.board_size, other_positions, self.board)
+        robot.move(direction, self.board_size, other_positions, self.board)
         self.steps = self.steps + 1
         print("steps: ", self.steps)
         self.update_board()
@@ -105,8 +107,8 @@ class RicochetRobotsUI:
             self.current_robot = int(event.char) - 1
 
     def bind_keys(self):
-        self.master.bind("<Up>", lambda e: self.move(0, -1))
-        self.master.bind("<Down>", lambda e: self.move(0, 1))
-        self.master.bind("<Left>", lambda e: self.move(-1, 0))
-        self.master.bind("<Right>", lambda e: self.move(1, 0))
+        self.master.bind("<Up>", lambda e: self.move(Direction.NORTH))
+        self.master.bind("<Down>", lambda e: self.move(Direction.SOUTH))
+        self.master.bind("<Left>", lambda e: self.move(Direction.WEST))
+        self.master.bind("<Right>", lambda e: self.move(Direction.EAST))
         self.master.bind("<Key>", self.switch_robot)

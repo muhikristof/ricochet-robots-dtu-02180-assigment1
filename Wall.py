@@ -2,10 +2,10 @@ from enum import Enum
 
 
 class Direction(Enum):  # The side of the field the wall is located at
-    NORTH = 1
-    SOUTH = 2
-    EAST = 3
-    WEST = 4
+    NORTH = (0, -1)
+    SOUTH = (0, 1)
+    EAST = (1, 0)
+    WEST = (-1, 0)
 
     # overloading '~' operator
     def __invert__(self):
@@ -17,6 +17,10 @@ class Direction(Enum):  # The side of the field the wall is located at
             return Direction.WEST
         if self == Direction.WEST:
             return Direction.EAST
+
+    @staticmethod
+    def from_int(i: int):
+        return [Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST][i - 1]
 
 
 class Wall:

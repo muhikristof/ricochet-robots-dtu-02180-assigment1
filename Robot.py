@@ -1,6 +1,7 @@
 from typing import Tuple, List
 
 from Board import Board
+from Wall import Direction
 
 
 class Robot:
@@ -9,10 +10,12 @@ class Robot:
         self.color = color
         self.robot_id = robot_id
 
+    def available_moves(self, board: Board):
+        pass
+
     def move(
         self,
-        dx: int,
-        dy: int,
+        direction: Direction,
         board_size: Tuple[int, int],
         other_positions: List[Tuple[int, int]],
         board: Board,
@@ -20,6 +23,7 @@ class Robot:
         moving = True
         while moving:
             x, y = self.position
+            dx, dy = direction.value
             new_x, new_y = x + dx, y + dy
 
             # Check if the new position is within the board boundaries
