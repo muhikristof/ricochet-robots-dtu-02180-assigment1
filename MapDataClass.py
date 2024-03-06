@@ -10,10 +10,10 @@ class Direction(Enum):
     WEST = 4
 
 @dataclass
-class WallData():    
+class WallData():
     x_pos: int
     y_pos: int
     direction: int
-    
+
     def to_object(d):
         return WallData(d['x_pos'], d['y_pos'], d['direction'])

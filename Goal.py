@@ -14,9 +14,3 @@ class Goal:
         y2 = y1 + cell_size
         # Draw a rectangle representing the goal
         canvas.create_oval(x1, y1, x2, y2, fill=self.color, outline="black", tags="goal")
-
-
-
-
-
-
