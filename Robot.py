@@ -16,8 +16,11 @@ class Robot:
         self.color = color
         self.robot_id = robot_id
 
+    @staticmethod
     def available_moves(
-        self, board: Board, other_robots_positions: List[Tuple[int, int]]
+        current_position: Tuple[int, int],
+        board: Board,
+        other_robots_positions: List[Tuple[int, int]],
     ) -> List[AvailableMove]:
         """Return a list of available moves for the robot.
 
@@ -30,18 +33,19 @@ class Robot:
         """
         available_moves = []
         for direction in Direction:
-            final_position = self.find_final_position(
-                direction, board, other_robots_positions
+            final_position = Robot.find_final_position(
+                current_position, direction, board, other_robots_positions
             )
 
             # If the final position is different from the current position, add the move to the list
-            if final_position != self.position:
+            if final_position != current_position:
                 available_moves.append(AvailableMove(final_position, direction))
 
         return available_moves
 
+    @staticmethod
     def find_final_position(
-        self,
+        current_position: Tuple[int, int],
         direction: Direction,
         board: Board,
         other_robots_positions: List[Tuple[int, int]],
@@ -56,7 +60,7 @@ class Robot:
         Returns:
         Tuple[int, int]: The final position of the robot after moving.
         """
-        final_position = self.position
+        final_position = current_position
         moving = True
         while moving:
             x, y = final_position
@@ -97,8 +101,8 @@ class Robot:
         bool: True if the robot is on its goal after moving, False otherwise.
         """
 
-        final_position = self.find_final_position(
-            direction, board, other_robots_positions
+        final_position = Robot.find_final_position(
+            self.position, direction, board, other_robots_positions
         )
         self.position = final_position
         return board.is_on_goal(self.position, self.robot_id)
