@@ -1,10 +1,22 @@
+from typing import Tuple, List
+
+from Board import Board
+
+
 class Robot:
-    def __init__(self, position, color, number):
+    def __init__(self, position: Tuple[int, int], color: str, robot_id: int):
         self.position = position
         self.color = color
-        self.number = number
+        self.robot_id = robot_id
 
-    def move(self, dx, dy, board_size, other_positions, board):
+    def move(
+        self,
+        dx: int,
+        dy: int,
+        board_size: Tuple[int, int],
+        other_positions: List[Tuple[int, int]],
+        board: Board,
+    ):
         moving = True
         while moving:
             x, y = self.position
@@ -25,4 +37,4 @@ class Robot:
             else:
                 moving = False  # Stop moving if the edge of the board is reached
 
-        board.is_on_goal(self.position, self.number)
+        board.is_on_goal(self.position, self.robot_id)

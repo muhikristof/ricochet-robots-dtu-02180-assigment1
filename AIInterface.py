@@ -4,10 +4,10 @@ from Wall import Direction
 
 
 class AIInterface:
-    def __init__(self, game_instance):
+    def __init__(self, game_instance: "RicochetRobotsUI"):
         self.game_instance = game_instance
 
-    def move_robot(self, robot_id, direction):
+    def move_robot(self, robot_id: int, direction: Direction):
         """
         Moves a specified robot in a given direction.
 
@@ -31,7 +31,9 @@ class AIInterface:
 
         # Use Board's is_on_goal method to check if the robot is on its goal
         robot = self.game_instance.robots[robot_id]
-        on_goal = self.game_instance.board.is_on_goal(robot.position, robot.number)
+        on_goal = self.game_instance.board.is_on_goal(robot.position, robot.robot_id)
+
+        self.game_instance.master.update_idletasks()  # Update UI after move
 
         return robot.position, on_goal
 
@@ -47,7 +49,6 @@ def dumb_ai_test(game_interface: AIInterface):
     print(
         f"Robot {robot_id} moved to {new_position}. On goal: {'Yes' if on_goal else 'No'}"
     )
-    game_interface.game_instance.master.update_idletasks()  # Update UI after move - Only for visualization!
     time.sleep(1)  # Just to see it move
 
     # Move robot 2 right
@@ -57,5 +58,4 @@ def dumb_ai_test(game_interface: AIInterface):
     print(
         f"Robot {robot_id} moved to {new_position}. On goal: {'Yes' if on_goal else 'No'}"
     )
-    game_interface.game_instance.master.update_idletasks()  # Update UI after move
     time.sleep(1)  # Just to see it move

@@ -1,13 +1,14 @@
+from typing import List, Tuple
 from Goal import Goal
 from Wall import Wall, Direction
 
 
 class Board:
-    def __init__(self, board_size):
+    def __init__(self, board_size: Tuple[int, int]):
         # Initialize the board with given size and an empty list of walls
-        self.board_size = board_size
-        self.walls = []
-        self.goals = []
+        self.board_size: Tuple[int, int] = board_size
+        self.walls: List[Wall] = []
+        self.goals: List[Goal] = []
 
         # Add the goals and walls to the canvas
         self.create_goals()
@@ -17,7 +18,7 @@ class Board:
         self.add_goal(0, 7, 0, "red")
         self.add_goal(15, 0, 1, "blue")
 
-    def add_goal(self, x, y, robot_number, color):
+    def add_goal(self, x: int, y: int, robot_number: int, color: str):
         goal = Goal(x, y, robot_number, color)
         self.goals.append(goal)
 
@@ -48,12 +49,14 @@ class Board:
         # self.add_wall(8, 0, Direction.SOUTH)
         # self.add_wall(5, 15, Direction.NORTH)
 
-    def add_wall(self, x, y, direction):  # Adds the wall to the canvas
+    def add_wall(
+        self, x: int, y: int, direction: Direction
+    ):  # Adds the wall to the canvas
         wall = Wall(x, y, direction)
         self.walls.append(wall)
 
     def is_wall(
-        self, from_position, to_position
+        self, from_position: Tuple[int, int], to_position: Tuple[int, int]
     ):  # Check if there's a wall between two positions
         x_from, y_from = from_position
         x_to, y_to = to_position
@@ -98,7 +101,7 @@ class Board:
                 return True
         return False
 
-    def is_on_goal(self, position, robot_number):
+    def is_on_goal(self, position: Tuple[int, int], robot_number: int):
         for goal in self.goals:
             if position == (goal.x, goal.y) and robot_number == goal.robot_number:
                 print(f"Robot {robot_number} reached its goal at {position}!")
