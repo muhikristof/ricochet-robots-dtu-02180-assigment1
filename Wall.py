@@ -20,7 +20,7 @@ class Direction(Enum):  # The side of the field the wall is located at
 
 
 class Wall:
-    def __init__(self, x, y, direction):
+    def __init__(self, x: int, y: int, direction: Direction):
         self.x = x
         self.y = y
         self.direction = direction

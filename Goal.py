@@ -1,5 +1,5 @@
 class Goal:
-    def __init__(self, x, y, robot_number, color):
+    def __init__(self, x: int, y: int, robot_number: int, color: str):
         self.x = x
         self.y = y
         self.robot_number = robot_number
