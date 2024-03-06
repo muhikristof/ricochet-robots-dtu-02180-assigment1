@@ -61,9 +61,7 @@ def run_ricochet_robots_ui(map_data):
     game_ui = RicochetRobotsUI(root, map_data)
     ai_interface = AIInterface(game_ui)
 
-    # Initialize the AI. This is just a dummy test that moves a robot to goal. But the interaction should be similar.
-    # When building the AI, replace with root.after(0, method to run AI, ai_interface)
-    root.after(1000, BFSai.build_solution_and_play, ai_interface)
+    root.after(500, BFSai.build_solution_and_play, ai_interface)
     root.mainloop()
 
 

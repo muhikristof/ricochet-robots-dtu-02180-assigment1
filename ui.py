@@ -21,8 +21,8 @@ class RicochetRobotsUI:
         self.steps = 0
 
         # Canvas setup
-        canvas_width = self.board_size[0] * self.cell_size
-        canvas_height = self.board_size[1] * self.cell_size
+        canvas_width = (self.board_size[0] + 1) * self.cell_size
+        canvas_height = (self.board_size[1] + 1) * self.cell_size
         self.canvas = tk.Canvas(master, width=canvas_width, height=canvas_height)
         self.canvas.pack()
         self.init_ui()
@@ -34,13 +34,27 @@ class RicochetRobotsUI:
 
     def init_ui(self):  # Draw grid lines
         for x in range(self.board_size[0] + 1):
+            # Write indices at the bottom
+            self.canvas.create_text(
+                x * self.cell_size + self.cell_size / 2,
+                self.board_size[1] * self.cell_size + self.cell_size / 2,
+                text=str(x),
+                font=("Arial", 12),
+            )
             self.canvas.create_line(
                 x * self.cell_size,
                 0,
                 x * self.cell_size,
                 self.board_size[1] * self.cell_size,
             )
+
         for y in range(self.board_size[1] + 1):
+            self.canvas.create_text(
+                self.board_size[0] * self.cell_size + self.cell_size / 2,
+                y * self.cell_size + self.cell_size / 2,
+                text=str(y),
+                font=("Arial", 12),
+            )
             self.canvas.create_line(
                 0,
                 y * self.cell_size,
@@ -61,7 +75,7 @@ class RicochetRobotsUI:
             Robot((2, 3), "red", 0),
             Robot((3, 3), "blue", 1),
             Robot((4, 3), "green", 2),
-            Robot((5, 3), "yellow", 3),
+            # Robot((5, 3), "yellow", 3),
         ]
         self.current_robot = 0
 
