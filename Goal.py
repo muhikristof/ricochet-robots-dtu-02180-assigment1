@@ -1,4 +1,3 @@
-
 class Goal:
     def __init__(self, x, y, robot_number, color):
         self.x = x
@@ -13,4 +12,6 @@ class Goal:
         x2 = x1 + cell_size
         y2 = y1 + cell_size
         # Draw a rectangle representing the goal
-        canvas.create_oval(x1, y1, x2, y2, fill=self.color, outline="black", tags="goal")
+        canvas.create_oval(
+            x1, y1, x2, y2, fill=self.color, outline="black", tags="goal"
+        )

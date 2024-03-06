@@ -14,10 +14,14 @@ class Robot:
             if 0 <= new_x < board_size[0] and 0 <= new_y < board_size[1]:
 
                 # Check if new position is not another robot and not blocked by a wall
-                if (new_x, new_y) not in other_positions and not board.is_wall(self.position, (new_x, new_y)):
+                if (new_x, new_y) not in other_positions and not board.is_wall(
+                    self.position, (new_x, new_y)
+                ):
                     self.position = (new_x, new_y)  # move the robot
                 else:
-                    moving = False  # Stop moving if another robot or a wall blocks the path
+                    moving = (
+                        False  # Stop moving if another robot or a wall blocks the path
+                    )
             else:
                 moving = False  # Stop moving if the edge of the board is reached
 
