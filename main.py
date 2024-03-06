@@ -1,5 +1,6 @@
 from enum import Enum
-from AIInterface import AIInterface, dumb_ai_test
+from AIInterface import AIInterface
+from BFSai import BFSai
 from typing import List, Tuple
 from MapDataClass import WallData
 from UI import RicochetRobotsUI
@@ -62,7 +63,7 @@ def run_ricochet_robots_ui(map_data):
 
     # Initialize the AI. This is just a dummy test that moves a robot to goal. But the interaction should be similar.
     # When building the AI, replace with root.after(0, method to run AI, ai_interface)
-    root.after(1000, dumb_ai_test, ai_interface)
+    root.after(1000, BFSai.build_solution_and_play, ai_interface)
     root.mainloop()
 
 

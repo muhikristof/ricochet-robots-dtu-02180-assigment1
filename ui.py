@@ -97,7 +97,7 @@ class RicochetRobotsUI:
             p.position for i, p in enumerate(self.robots) if i != self.current_robot
         ]
         robot = self.robots[self.current_robot]
-        robot.move(direction, self.board_size, other_positions, self.board)
+        robot.move(direction, other_positions, self.board)
         self.steps = self.steps + 1
         print("steps: ", self.steps)
         self.update_board()

@@ -15,7 +15,7 @@ class Board:
         self.create_walls()
 
     def create_goals(self):
-        self.add_goal(0, 7, 0, "red")
+        # self.add_goal(0, 7, 0, "red")
         self.add_goal(15, 0, 1, "blue")
 
     def add_goal(self, x: int, y: int, robot_number: int, color: str):
