@@ -1,10 +1,11 @@
 import time
 
+from UI import RicochetRobotsUI
 from Wall import Direction
 
 
 class AIInterface:
-    def __init__(self, game_instance: "RicochetRobotsUI"):
+    def __init__(self, game_instance: RicochetRobotsUI):
         self.game_instance = game_instance
 
     def move_robot(self, robot_id: int, direction: Direction):
