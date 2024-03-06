@@ -137,7 +137,9 @@ class RicochetRobotsUI:
         self.draw_robots()
 
     def move(self, dx, dy):
-        other_positions = [p.position for i, p in enumerate(self.robots) if i != self.current_robot]
+        other_positions = [
+            p.position for i, p in enumerate(self.robots) if i != self.current_robot
+        ]
         robot = self.robots[self.current_robot]
         robot.move(dx, dy, self.board_size, other_positions, self.board)
         self.steps = self.steps + 1
@@ -162,6 +164,7 @@ def show_game_ui():
     menu_ui = RicochetRobotMenu(root)
     root.mainloop()
 
+
 def run_ricochet_robots_ui(map_data):
     root = tk.Tk()
     root.title("Ricochet Robots")
@@ -172,6 +175,7 @@ def run_ricochet_robots_ui(map_data):
     # When building the AI, replace with root.after(0, method to run AI, ai_interface)
     root.after(1000, dumb_ai_test, ai_interface)
     root.mainloop()
+
 
 if __name__ == "__main__":
     show_game_ui()

@@ -14,8 +14,8 @@ class Board:
         self.create_walls()
 
     def create_goals(self):
-        self.add_goal(0,7, 0, "red")
-        self.add_goal(15,0, 1, "blue")
+        self.add_goal(0, 7, 0, "red")
+        self.add_goal(15, 0, 1, "blue")
 
     def add_goal(self, x, y, robot_number, color):
         goal = Goal(x, y, robot_number, color)
@@ -52,7 +52,9 @@ class Board:
         wall = Wall(x, y, direction)
         self.walls.append(wall)
 
-    def is_wall(self, from_position, to_position):  # Check if there's a wall between two positions
+    def is_wall(
+        self, from_position, to_position
+    ):  # Check if there's a wall between two positions
         x_from, y_from = from_position
         x_to, y_to = to_position
         dx = x_to - x_from
@@ -73,7 +75,7 @@ class Board:
             "EAST": "WEST",
             "WEST": "EAST",
             "SOUTH": "NORTH",
-            "NORTH": "SOUTH"
+            "NORTH": "SOUTH",
         }
 
         for wall in self.walls:  # Loops through all walls
@@ -81,10 +83,18 @@ class Board:
             #      "\nPlayer position:", (x_from, y_from), move_direction, "\n \n")
 
             # Checks for walls that's facing the intended direction
-            if wall.x == x_from and wall.y == y_from and wall.direction.name == move_direction:
+            if (
+                wall.x == x_from
+                and wall.y == y_from
+                and wall.direction.name == move_direction
+            ):
                 return True
             # Checks for walls that's facing the opposite direction
-            elif wall.x == x_to and wall.y == y_to and opposite_direction[wall.direction.name] == move_direction:
+            elif (
+                wall.x == x_to
+                and wall.y == y_to
+                and opposite_direction[wall.direction.name] == move_direction
+            ):
                 return True
         return False
 
