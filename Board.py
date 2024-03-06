@@ -24,30 +24,6 @@ class Board:
 
     def create_walls(self):
         return None
-        # self.add_wall(2, 2, Direction.WEST)
-        # self.add_wall(6, 7, Direction.EAST)
-        # self.add_wall(3, 5, Direction.WEST)
-        # self.add_wall(8, 3, Direction.SOUTH)
-        # self.add_wall(10, 10, Direction.NORTH)
-        # self.add_wall(12, 12, Direction.WEST)
-        # self.add_wall(8, 6, Direction.EAST)
-        # self.add_wall(4, 10, Direction.SOUTH)
-        # self.add_wall(5, 14, Direction.WEST)
-        # self.add_wall(11, 8, Direction.NORTH)
-        # self.add_wall(13, 5, Direction.EAST)
-        # self.add_wall(9, 12, Direction.WEST)
-        # self.add_wall(6, 3, Direction.SOUTH)
-        # self.add_wall(14, 14, Direction.NORTH)
-        # self.add_wall(2, 8, Direction.WEST)
-        # self.add_wall(4, 4, Direction.EAST)
-        # self.add_wall(12, 2, Direction.SOUTH)
-        # self.add_wall(7, 11, Direction.NORTH)
-        # self.add_wall(15, 7, Direction.WEST)
-        # self.add_wall(13, 9, Direction.EAST)
-        # self.add_wall(0, 5, Direction.SOUTH)
-        # self.add_wall(16, 10, Direction.WEST)
-        # self.add_wall(8, 0, Direction.SOUTH)
-        # self.add_wall(5, 15, Direction.NORTH)
 
     def add_wall(
         self, x: int, y: int, direction: Direction
