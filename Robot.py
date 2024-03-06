@@ -25,6 +25,7 @@ class Robot:
         """Return a list of available moves for the robot.
 
         Parameters:
+        current_position (Tuple[int, int]): The current position of the robot.
         board (Board): The board object containing the walls and goals.
         other_robots_positions (List[Tuple[int, int]]): The positions of the other robots.
 
@@ -53,6 +54,7 @@ class Robot:
         """Given a direction for a robot to move, return the final position after moving.
 
         Parameters:
+        current_position (Tuple[int, int]): The current position of the robot.
         direction (Direction): The direction to move the robot.
         board (Board): The board object containing the walls and goals.
         other_robots_positions (List[Tuple[int, int]]): The positions of the other robots.

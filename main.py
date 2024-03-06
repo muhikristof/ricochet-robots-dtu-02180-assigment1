@@ -3,7 +3,7 @@ from AIInterface import AIInterface
 from BFSai import BFSai
 from typing import List, Tuple
 from MapDataClass import WallData
-from UI import RicochetRobotsUI
+from ui import RicochetRobotsUI
 import json
 import tkinter as tk
 

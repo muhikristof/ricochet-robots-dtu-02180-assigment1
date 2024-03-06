@@ -1,6 +1,6 @@
 import time
 
-from UI import RicochetRobotsUI
+from ui import RicochetRobotsUI
 from Wall import Direction
 
 
