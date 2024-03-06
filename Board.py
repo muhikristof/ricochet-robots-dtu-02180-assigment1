@@ -94,4 +94,3 @@ class Board:
                 print(f"Robot {robot_number} reached its goal at {position}!")
                 return True
         return False
-

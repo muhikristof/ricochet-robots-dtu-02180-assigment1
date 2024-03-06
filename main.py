@@ -161,7 +161,7 @@ def show_game_ui():
     root.title("Ricochet Robots Menu")
     menu_ui = RicochetRobotMenu(root)
     root.mainloop()
-    
+
 def run_ricochet_robots_ui(map_data):
     root = tk.Tk()
     root.title("Ricochet Robots")
