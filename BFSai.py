@@ -70,10 +70,13 @@ class BFSai(AI):
         Returns:
         Optional[RobotMoves]: The step-by-step solution to the game.
         """
+        start_time = time.time()  # start the time
+
         # Define a queue for BFS. Each element is a tuple (robots_state, path).
         queue: deque[Tuple[RobotsState, RobotMoves]] = deque(
             [(initial_state, RobotMoves([]))]
         )
+        moves_tried = 0  # Initialize counter for moves tried
 
         # Set to keep track of visited states to avoid cycles.
         visited = set([tuple(initial_state)])
@@ -88,6 +91,8 @@ class BFSai(AI):
             #     self.game_instance.master.update_idletasks()
 
             if self.goal_test(current_state):
+                end_time = time.time()  # Record the end time when the solution is found
+                print(f"Solution found in {end_time - start_time:.2f} seconds with total moves tried: {moves_tried}")
                 return path  # Found the solution
 
             for action in self.actions(current_state):
@@ -97,8 +102,10 @@ class BFSai(AI):
                 if tuple(new_state) not in visited:
                     visited.add(tuple(new_state))
                     queue.append((new_state, RobotMoves(path + [action])))
+                    moves_tried += 1
 
         # If the queue is empty and no solution was found
+        end_time = time.time()  # Stop timer if no solution
         return None
 
     @staticmethod
