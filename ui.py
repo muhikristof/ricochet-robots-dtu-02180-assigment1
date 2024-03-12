@@ -4,6 +4,7 @@ from Board import Board
 from MapDataClass import WallData
 from Robot import Robot
 from Wall import Direction
+from copy import deepcopy
 
 
 class RicochetRobotsUI:
@@ -19,6 +20,16 @@ class RicochetRobotsUI:
         self.board = Board(board_size)
         self.cell_size = 30  # size of every cell on the board
         self.steps = 0
+
+        # Define robots, their station position, color and number.
+        self.robots_original_positions = [
+            Robot((2, 3), "red", 0),
+            Robot((3, 3), "blue", 1),
+            Robot((4, 3), "green", 2),
+            # Robot((5, 3), "yellow", 3),
+        ]
+        self.current_robot = 0
+        self.robots: List[Robot] = None
 
         # Canvas setup
         canvas_width = (self.board_size[0] + 1) * self.cell_size
@@ -63,21 +74,20 @@ class RicochetRobotsUI:
             )
 
     def init_game(self, map_data: List[WallData]):  # Load map and robot position
-
         # Load map data
         for data in map_data:
             self.board.add_wall(
                 data.x_pos, data.y_pos, Direction.from_int(data.direction)
             )
 
-        # Define robots, their station position, color and number.
-        self.robots = [
-            Robot((2, 3), "red", 0),
-            Robot((3, 3), "blue", 1),
-            Robot((4, 3), "green", 2),
-            # Robot((5, 3), "yellow", 3),
-        ]
+        self.robots = deepcopy(self.robots_original_positions)
         self.current_robot = 0
+
+    def reset_game(self):
+        self.steps = 0
+        self.robots = deepcopy(self.robots_original_positions)
+        self.current_robot = 0
+        self.update_board()
 
     def draw_robots(self):
         # self.canvas.delete("robot")  # Clear existing robots

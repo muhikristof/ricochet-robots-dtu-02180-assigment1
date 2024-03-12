@@ -1,6 +1,6 @@
 from enum import Enum
 from AIInterface import AIInterface
-from BFSai import BFSai
+from TreeSearchAI import TreeSearchAI
 from typing import List, Tuple
 from MapDataClass import WallData
 from ui import RicochetRobotsUI
@@ -61,7 +61,25 @@ def run_ricochet_robots_ui(map_data):
     game_ui = RicochetRobotsUI(root, map_data)
     ai_interface = AIInterface(game_ui)
 
-    root.after(500, BFSai.build_solution_and_play, ai_interface)
+    tk.Button(
+        root,
+        text="Solve with BFS",
+        command=lambda: TreeSearchAI.build_solution_and_play(ai_interface, True),
+    ).pack(side="left", fill="x")
+
+    # A button to reset the game
+    tk.Button(
+        root,
+        text="Reset",
+        command=game_ui.reset_game,
+    ).pack(side="left", fill="x")
+
+    tk.Button(
+        root,
+        text="Solve with DFS",
+        command=lambda: TreeSearchAI.build_solution_and_play(ai_interface, False),
+    ).pack(side="right", fill="x")
+
     root.mainloop()
 
 

@@ -16,7 +16,7 @@ RobotMoves = NewType("RobotMoves", List[RobotMove])
 RobotsState = NewType("RobotsState", List[Tuple[int, int]])
 
 
-class BFSai(AI):
+class TreeSearchAI(AI):
     def actions(self, robots_state: RobotsState) -> RobotMoves:
         """Returns a list of all possible actions for the robots in the current state.
 
@@ -64,7 +64,7 @@ class BFSai(AI):
     def path_cost(self) -> int:
         return 1
 
-    def solve(self, initial_state: RobotsState) -> Optional[RobotMoves]:
+    def solve_bfs(self, initial_state: RobotsState) -> Optional[RobotMoves]:
         """Solves the game using BFS and returns the solution.
 
         Returns:
@@ -92,7 +92,9 @@ class BFSai(AI):
 
             if self.goal_test(current_state):
                 end_time = time.time()  # Record the end time when the solution is found
-                print(f"Solution found in {end_time - start_time:.2f} seconds with total moves tried: {moves_tried}")
+                print(
+                    f"Solution found in {end_time - start_time:.2f} seconds with total moves tried: {moves_tried}"
+                )
                 return path  # Found the solution
 
             for action in self.actions(current_state):
@@ -108,14 +110,68 @@ class BFSai(AI):
         end_time = time.time()  # Stop timer if no solution
         return None
 
+    def solve_dfs(self, initial_state: RobotsState) -> Optional[RobotMoves]:
+        """Solves the game using DFS and returns the solution.
+
+        Parameters:
+        initial_state (RobotsState): The initial state of the game.
+
+        Returns:
+        Optional[RobotMoves]: The step-by-step solution to the game.
+        """
+        start_time = time.time()
+        stack = [(initial_state, RobotMoves([]))]
+        visited = set([tuple(initial_state)])
+        moves_tried = 0
+
+        while stack:
+            current_state, path = stack.pop()
+
+            if self.goal_test(current_state):
+                end_time = time.time()
+                print(
+                    f"Solution found in {end_time - start_time:.2f} seconds with total moves tried: {moves_tried}"
+                )
+                return path
+
+            for action in self.actions(current_state):
+                new_state = self.results(current_state, action)
+
+                if tuple(new_state) not in visited:
+                    visited.add(tuple(new_state))
+                    stack.append((new_state, RobotMoves(path + [action])))
+                    moves_tried += 1
+
+        end_time = time.time()
+        return None
+
+    def solve(
+        self, initial_state: RobotsState, bfs: bool = True
+    ) -> Optional[RobotMoves]:
+        """Solves the game using either BFS or DFS and returns the solution.
+
+        Parameters:
+        initial_state (RobotsState): The initial state of the game.
+        bfs (bool): If True, uses BFS. Otherwise, uses DFS.
+
+        Returns:
+        Optional[RobotMoves]: The step-by-step solution to the game.
+        """
+        if bfs:
+            return self.solve_bfs(initial_state)
+        else:
+            return self.solve_dfs(initial_state)
+
     @staticmethod
-    def build_solution_and_play(game_interface: AIInterface):
-        ai = BFSai(game_interface)
+    def build_solution_and_play(game_interface: AIInterface, use_bfs: bool = True):
+        """ """
+        ai = TreeSearchAI(game_interface)
         initial_state = RobotsState(
             [robot.position for robot in game_interface.game_instance.robots]
         )
 
-        solution = ai.solve(initial_state)
+        solution = ai.solve(initial_state, use_bfs)
+
         if solution is None:
             print("No solution found")
             return
