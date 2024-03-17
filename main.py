@@ -1,6 +1,6 @@
 from enum import Enum
 from AIInterface import AIInterface
-from TreeSearchAI import TreeSearchAI
+from GraphSearchAI import TreeSearchAI
 from typing import List, Tuple
 from MapDataClass import WallData
 from ui import RicochetRobotsUI
