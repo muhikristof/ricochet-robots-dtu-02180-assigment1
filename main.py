@@ -1,6 +1,6 @@
 from enum import Enum
 from AIInterface import AIInterface
-from GraphSearchAI import TreeSearchAI
+from GraphSearchAI import GraphSearchAI
 from typing import List, Tuple
 from MapDataClass import WallData
 from ui import RicochetRobotsUI
@@ -64,7 +64,7 @@ def run_ricochet_robots_ui(map_data):
     tk.Button(
         root,
         text="Solve with BFS",
-        command=lambda: TreeSearchAI.build_solution_and_play(ai_interface, True),
+        command=lambda: GraphSearchAI.build_solution_and_play(ai_interface, True),
     ).pack(side="left", fill="x")
 
     # A button to reset the game
@@ -77,7 +77,7 @@ def run_ricochet_robots_ui(map_data):
     tk.Button(
         root,
         text="Solve with DFS",
-        command=lambda: TreeSearchAI.build_solution_and_play(ai_interface, False),
+        command=lambda: GraphSearchAI.build_solution_and_play(ai_interface, False),
     ).pack(side="right", fill="x")
 
     root.mainloop()

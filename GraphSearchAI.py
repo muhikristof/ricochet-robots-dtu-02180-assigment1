@@ -16,7 +16,7 @@ RobotMoves = NewType("RobotMoves", List[RobotMove])
 RobotsState = NewType("RobotsState", List[Tuple[int, int]])
 
 
-class TreeSearchAI(AI):
+class GraphSearchAI(AI):
     def actions(self, robots_state: RobotsState) -> RobotMoves:
         """Returns a list of all possible actions for the robots in the current state.
 
@@ -165,7 +165,7 @@ class TreeSearchAI(AI):
     @staticmethod
     def build_solution_and_play(game_interface: AIInterface, use_bfs: bool = True):
         """ """
-        ai = TreeSearchAI(game_interface)
+        ai = GraphSearchAI(game_interface)
         initial_state = RobotsState(
             [robot.position for robot in game_interface.game_instance.robots]
         )
