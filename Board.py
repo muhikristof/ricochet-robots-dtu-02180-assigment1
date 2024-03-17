@@ -17,6 +17,7 @@ class Board:
     def create_goals(self):
         self.add_goal(0, 7, 0, "red")
         self.add_goal(15, 0, 1, "blue")
+        # self.add_goal(5, 14, 2, "green")
 
     def add_goal(self, x: int, y: int, robot_number: int, color: str):
         goal = Goal(x, y, robot_number, color)
@@ -80,6 +81,6 @@ class Board:
     def is_on_goal(self, position: Tuple[int, int], robot_number: int):
         for goal in self.goals:
             if position == (goal.x, goal.y) and robot_number == goal.robot_number:
-                #print(f"Robot {robot_number} reached its goal at {position}!")
+                # print(f"Robot {robot_number} reached its goal at {position}!")
                 return True
         return False
