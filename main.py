@@ -64,21 +64,26 @@ def run_ricochet_robots_ui(map_data):
     tk.Button(
         root,
         text="Solve with BFS",
-        command=lambda: GraphSearchAI.build_solution_and_play(ai_interface, True),
-    ).pack(side="left", fill="x")
-
-    # A button to reset the game
-    tk.Button(
-        root,
-        text="Reset",
-        command=game_ui.reset_game,
+        command=lambda: GraphSearchAI.build_solution_and_play(ai_interface, "bfs"),
     ).pack(side="left", fill="x")
 
     tk.Button(
         root,
         text="Solve with DFS",
-        command=lambda: GraphSearchAI.build_solution_and_play(ai_interface, False),
-    ).pack(side="right", fill="x")
+        command=lambda: GraphSearchAI.build_solution_and_play(ai_interface, "dfs"),
+    ).pack(side="left", fill="x")
+
+    tk.Button(
+        root,
+        text="Solve with A*",
+        command=lambda: GraphSearchAI.build_solution_and_play(ai_interface, "a_star"),
+    ).pack(side="left", fill="x")
+
+    tk.Button(
+        root,
+        text="Reset",
+        command=game_ui.reset_game,
+    ).pack(side="left", fill="x")
 
     root.mainloop()
 
