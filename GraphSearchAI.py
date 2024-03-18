@@ -76,15 +76,19 @@ class GraphSearchAI(AI):
         Returns:
             int: The heuristic cost estimate to reach the goal from the current state.
         """
-        total_distance = 0
+        distance = 0
         for robot_index, robot_position in enumerate(robots_state):     # Iterates each robot
             if robot_index < len(self.board.goals):     # Only calculate distance for robots with a goal.
                 goal = self.board.goals[robot_index]    # Get goal for the individual robot
 
                 # Calculate distance between robot and goal.
                 distance = abs(robot_position[0] - goal.x) + abs(robot_position[1] - goal.y)
-                total_distance += distance
-        return total_distance   # Returns total distance
+
+                # debug
+                #if robot_index == 0:
+                #    print(f"{robot_index} -> {robot_position}, Goal: ({goal.x}, {goal.y}), Distance: {distance}")
+
+        return distance   # Returns total distance
 
     def solve_a_star(self, initial_state: RobotsState) -> Optional[RobotMoves]:
         """
