@@ -68,38 +68,45 @@ class GraphSearchAI(AI):
     def heuristic(self, robots_state: RobotsState) -> int:
         """
         Calculates the heuristic cost of a given state.
+        Robots without a goal is ignored in the calculation
 
         Parameters:
-        robots_state (RobotsState): The current state of the robots.
+            robots_state (RobotsState): The current state of the robots.
 
         Returns:
-        int: The heuristic cost estimate to reach the goal from the current state.
+            int: The heuristic cost estimate to reach the goal from the current state.
         """
         total_distance = 0
-        for robot_position in robots_state:
-            # Assuming the Goal class has 'x' and 'y' attributes for its position
-            distances = [abs(robot_position[0] - goal.x) + abs(robot_position[1] - goal.y)
-                         for goal in self.board.goals]
-            total_distance += min(distances)
-        return total_distance
+        for robot_index, robot_position in enumerate(robots_state):     # Iterates each robot
+            if robot_index < len(self.board.goals):     # Only calculate distance for robots with a goal.
+                goal = self.board.goals[robot_index]    # Get goal for the individual robot
+
+                # Calculate distance between robot and goal.
+                distance = abs(robot_position[0] - goal.x) + abs(robot_position[1] - goal.y)
+                total_distance += distance
+        return total_distance   # Returns total distance
 
     def solve_a_star(self, initial_state: RobotsState) -> Optional[RobotMoves]:
         """
         Solves the game using the A* and returns the solution.
 
+        References:
+            https://www.redblobgames.com/pathfinding/a-star/implementation.html
+            https://llego.dev/posts/implementing-the-a-search-algorithm-python/
+
         Parameters:
-        initial_state (RobotsState): The initial state of the game.
+            initial_state (RobotsState): The initial state of the game.
 
         Returns:
-        Optional[RobotMoves]: The step-by-step solution to the game.
+            Optional[RobotMoves]: The step-by-step solution to the game.
         """
         start_time = time.time()
-        # Priority queue for A*, storing elements as tuples (priority, (state, path))
-        frontier = [(0, (initial_state, RobotMoves([])))]
-        visited = set([tuple(initial_state)])
-        moves_tried = 0
+        frontier = [(0, (initial_state, RobotMoves([])))]   # Initialize priority queue with initial state
+        visited = {tuple(initial_state)}  # Set to keep track of visited states to avoid cycles.
+        moves_tried = 0     # Initialize counter for moves tried
 
         while frontier:
+            # Get state with the lowest priority from the frontier (discovered but not yet explored paths)
             priority, (current_state, path) = heappop(frontier)
 
             if self.goal_test(current_state):
@@ -107,12 +114,14 @@ class GraphSearchAI(AI):
                 print(f"Solution found in {end_time - start_time:.2f} seconds with total moves tried: {moves_tried}")
                 return path
 
-            for action in self.actions(current_state):
-                new_state = self.results(current_state, action)
-                if tuple(new_state) not in visited:
-                    visited.add(tuple(new_state))
-                    cost_so_far = len(path) + 1  # Each move has a cost of 1
-                    priority = cost_so_far + self.heuristic(new_state)
+            for action in self.actions(current_state):  # Iterate over actions
+                new_state = self.results(current_state, action)     # Get new state
+                if tuple(new_state) not in visited:  # Check if new state has not been visited
+                    visited.add(tuple(new_state))    # When navigating to new state, mark as visited
+                    cost_so_far = len(path) + 1      # Add cost to the move
+                    priority = cost_so_far + self.heuristic(new_state)  # Calculate priority using heuristic
+
+                    # Add new state to frontier list
                     heappush(frontier, (priority, (new_state, RobotMoves(path + [action]))))
                     moves_tried += 1
 
